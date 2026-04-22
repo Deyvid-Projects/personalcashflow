@@ -1,7 +1,0 @@
-pnpm create next-app@latest . \
-  --typescript \
-  --tailwind \
-  --app \
-  --src-dir=false \
-  --import-alias "@/*" \
-  --eslint

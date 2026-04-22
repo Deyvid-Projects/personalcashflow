@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0d0f18;
+  --color-surface: #141720;
+  --color-card: #1c2030;
+  --color-border: #272d44;
+  --color-accent: #7b6ff0;
+  --color-accent-soft: rgba(123, 111, 240, 0.18);
+  --color-teal: #00c9a7;
+  --color-red: #ff5f7e;
+  --color-yellow: #f9c846;
+  --color-blue: #4ca3f5;
+  --color-text: #eaedf8;
+  --color-muted: #6b7699;
+  --radius-card: 14px;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.surface {
+  background: var(--color-surface);
+}
+
+/* Recharts tooltip override pra combinar com o tema dark */
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-default-tooltip {
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 10px !important;
+}
