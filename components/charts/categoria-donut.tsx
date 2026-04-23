@@ -40,7 +40,7 @@ export function CategoriaDonut({ data }: { data: Row[] }) {
           </Pie>
           <Tooltip
             contentStyle={tooltipContentStyle}
-            formatter={(value: number) => formatBRL(value)}
+            formatter={(value) => formatBRL(Number(value))}
           />
           <Legend
             layout="vertical"

@@ -46,7 +46,7 @@ export function FluxoMensalChart({ data }: { data: Row[] }) {
           <Tooltip
             cursor={cursorStyle}
             contentStyle={tooltipContentStyle}
-            formatter={(value: number) => formatBRL(value)}
+            formatter={(value) => formatBRL(Number(value))}
           />
           <Legend wrapperStyle={legendStyle} />
           <Bar
