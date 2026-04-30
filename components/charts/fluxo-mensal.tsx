@@ -14,40 +14,71 @@ import { formatBRL } from "@/lib/format"
 
 type Row = { mesLabel: string; receitas: number; gastos: number }
 
+function cssVar(name: string, fallback: string) {
+	if (typeof window === "undefined") return fallback
+	const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+	return v || fallback
+}
+
 export function FluxoMensalChart({ data }: { data: Row[] }) {
+	const muted = cssVar("--color-muted", "#6b7699")
+	const border = cssVar("--color-border", "#272d44")
+	const teal = cssVar("--color-teal", "#00c9a7")
+	const red = cssVar("--color-red", "#ff5f7e")
+
+	const tickStyle = { fill: muted, fontSize: 11 }
+	const axisLineStyle = { stroke: border }
+	const gridStyle = { stroke: border, strokeDasharray: "0" as const }
+
 	return (
 		<div className="h-[250px] w-full">
 			<ResponsiveContainer width="100%" height="100%">
-				<BarChart
-					data={data}
-					barCategoryGap="22%"
-					margin={{ top: 8, right: 8, left: 0, bottom: 0 }}
-				>
-					<CartesianGrid stroke="var(--color-border)" strokeDasharray="0" vertical={false} />
+				<BarChart data={data} barCategoryGap="22%" margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+					<CartesianGrid {...gridStyle} vertical={false} />
 
 					<XAxis
 						dataKey="mesLabel"
-						tick= fill: "var(--color-muted)", fontSize: 11 
-						axisLine= stroke: "var(--color-border)" 
+						tick={tickStyle}
+						axisLine={axisLineStyle}
 						tickLine={false}
 					/>
 
 					<YAxis
-						tick= fill: "var(--color-muted)", fontSize: 11 
+						tick={tickStyle}
 						axisLine={false}
 						tickLine={false}
 						tickFormatter={(v) => `R$${(Number(v) / 1000).toFixed(1)}k`}
 					/>
 
 					<Tooltip
-						cursor= fill: "rgba(255,255,255,.03)" 
+						cursor={{ fill: "rgba(255,255,255,.03)" }}
 						formatter={(value) => formatBRL(Number(value))}
 					/>
 
-					<Legend wrapperStyle= color: "var(--color-muted)", fontSize: 11  />
+					<Legend
+						wrapperStyle={{
+							color: muted,
+							fontSize: 11,
+						}}
+					/>
 
-					<Bar dataKey="receitas" name="Receitas" fill="rgba(0,201,167,.65)" radius={[10, 10, 0, 0]} />
-					<Bar dataKey="gastos" name="Gastos" fill="rgba(255,95,126,.65)" radius={[10, 10, 0, 0]} />
+					<Bar
+						dataKey="receitas"
+						name="Receitas"
+						stroke={`rgba(0,0,0,0)`}
+						radius={[10, 10, 0, 0]}
+						// @ts-expect-error recharts aceita fillOpacity no runtime
+						fillOpacity={1}
+						shape={undefined}
+						fill={teal.startsWith("#") ? `${teal}A6` : "rgba(0,201,167,.65)"}
+					/>
+
+					<Bar
+						dataKey="gastos"
+						name="Gastos"
+						radius={[10, 10, 0, 0]}
+						fill={red.startsWith("#") ? `${red}A6` : "rgba(255,95,126,.65)"}
+					/>
 				</BarChart>
 			</ResponsiveContainer>
 		</div>
