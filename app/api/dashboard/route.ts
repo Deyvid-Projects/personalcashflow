@@ -1,17 +1,28 @@
-function parseData(raw: unknown): Date | null {
-    if (typeof raw !== "string") return null
-    
-    const ddmmyyyy = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
-    if (ddmmyyyy) {
-        const [, d, m, y] = ddmmyyyy
-        return new Date(Number(y), Number(m) - 1, Number(d))
-    }
-    
-    const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})/)
-    if (iso) {
-        const [, y, m, d] = iso
-        return new Date(Number(y), Number(m) - 1, Number(d))
-    }
-    
-    return null
+import { NextResponse } from "next/server"
+import { parseData } from "@/lib/utils/parse-date"
+
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+
+export async function GET() {
+  try {
+    // TODO: agregar dados do Sheets (resumo, fluxoMensal, etc.)
+    void parseData // placeholder pra evitar "unused import" enquanto monta
+    return NextResponse.json({
+      data: {
+        resumo: { receitas: 0, gastosReais: 0, saldo: 0, aVencer: 0 },
+        fluxoMensal: [],
+        transacoesPorCategoria: [],
+        ultimasTransacoes: [],
+        proxProjecoes: [],
+        saldoProjetado: [],
+        atualizadoEm: new Date().toISOString(),
+      },
+    })
+  } catch (error) {
+    return NextResponse.json(
+      { error: { code: "DASHBOARD_FAILED", message: String(error) } },
+      { status: 500 },
+    )
+  }
 }

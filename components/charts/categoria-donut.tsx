@@ -44,7 +44,7 @@ export function CategoriaDonut({ data }: { data: Row[] }) {
 						layout="vertical"
 						align="right"
 						verticalAlign="middle"
-						wrapperStyle={{ color: muted, fontSize: 11, lineHeight: "14px" }}
+						wrapperStyle={{ color: "hsl(var(--muted-foreground))", fontSize: 11, lineHeight: "14px" }}
 					/>
 				</PieChart>
 			</ResponsiveContainer>

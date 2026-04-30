@@ -67,7 +67,6 @@ export function FluxoMensalChart({ data }: { data: Row[] }) {
 						name="Receitas"
 						stroke={`rgba(0,0,0,0)`}
 						radius={[10, 10, 0, 0]}
-						// @ts-expect-error recharts aceita fillOpacity no runtime
 						fillOpacity={1}
 						shape={undefined}
 						fill={teal.startsWith("#") ? `${teal}A6` : "rgba(0,201,167,.65)"}
